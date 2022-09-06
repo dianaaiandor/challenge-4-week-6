@@ -1,0 +1,30 @@
+let coords = {};
+
+function showPosition(position) {
+  console.log(position);
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  coords.lat = latitude;
+  coords.lon = longitude;
+  console.log(latitude);
+  console.log(longitude);
+}
+
+navigator.geolocation.getCurrentPosition(showPosition);
+
+function showTemperature(response) {
+  let temp = Math.round(response.data.main.temp);
+
+  console.log(temp);
+  let h1 = document.querySelector("h1");
+  h1.innerHTML = temp;
+}
+
+let apiKey = "c95d60a1e3adbeb286133f1ebebc2579";
+
+let units = "metric";
+let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=${apiKey}&units=${units}`;
+
+console.log("tgers", coords.length, coords);
+console.log("linkapi", apiUrl);
+axios.get(apiUrl).then(showTemperature);
